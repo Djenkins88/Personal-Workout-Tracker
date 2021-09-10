@@ -19,7 +19,7 @@ router.get('/stats', (req, res) => {
     res.sendFile(path.join(__dirname, "../public/stats.html"));
 });
 
-module.exports = router;
+
 
 
 router.post("/api/workouts", (req, res) => {
@@ -49,7 +49,7 @@ router.get("/api/workouts", (req, res) => {
     console.log(success);
   })
   .catch((err) => {
-    res.status(400).json(err);
+    res.json(err);
   })
 })
 
