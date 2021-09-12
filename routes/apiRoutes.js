@@ -1,37 +1,35 @@
 const router = require("express").Router();
 const Workout = require("../models/Workout.js");
-const path = require('path');
+// const path = require('path');
 
 
 
 
 
-//get index.html page
-router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-});
+// //get index.html page
+// router.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/index.html"));
+// });
 
-router.get('/exercise',(req,res) => {
-    res.sendFile(path.join(__dirname, "../public/exercise.html"));
-});
+// router.get('/exercise',(req,res) => {
+//     res.sendFile(path.join(__dirname, "../public/exercise.html"));
+// });
 
-router.get('/stats', (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/stats.html"));
-});
-
-
+// router.get('/stats', (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/stats.html"));
+// });
 
 
 router.post("/api/workouts", (req, res) => {
- Workout.create({})
+ Workout.create()
     .then((dbWorkout) => {
       res.json(dbWorkout);
-      console.log(success);
     })
     .catch((err) => {
       res.status(400).json(err);
     });
 });
+  
 
 router.get("/api/workouts", (req, res) => {
   Workout.aggregate([ 
@@ -46,21 +44,20 @@ router.get("/api/workouts", (req, res) => {
   ])
   .then((dbWorkout) => {
     res.json(dbWorkout);
-    console.log(success);
   })
   .catch((err) => {
-    res.json(err);
+    res.status(400).json(err);
   })
-})
+});
 
 router.get("/api/workouts/range", (req, res) => {
   Workout.aggregate([ 
-    {
-      $addFields:{
-        totalDuration:{
-          $sum:"$excerises.duration"
+   {
+     $addFields:{
+       totalDuration:{
+         $sum:"$excerises.duration"
         }
-      }
+     }
     }
 
   ])
@@ -68,12 +65,21 @@ router.get("/api/workouts/range", (req, res) => {
   .limit(7)
   .then((dbWorkout) => {
     res.json(dbWorkout);
-    console.log(success);
   })
   .catch((err) => {
     res.status(400).json(err);
   })
-})
+});
+
+router.put("/api/workouts/:id", (req, res) => {
+  console.log(req.body)
+  Workout.findByIdAndUpdate(
+    req.params.id,
+    { $push: { exercise: req.body }},
+    { new: true })
+    .then(dbWorkout => { res.json(dbWorkout); })
+    .catch(err => { res.json(err); });
+});
 
 
 module.exports = router;
