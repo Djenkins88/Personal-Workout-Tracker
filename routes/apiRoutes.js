@@ -21,16 +21,16 @@ const Workout = require("../models/Workout.js");
 
 
 router.post("/api/workouts", (req, res) => {
- Workout.create()
+ Workout.create({})
     .then((dbWorkout) => {
       res.json(dbWorkout);
     })
     .catch((err) => {
       res.status(400).json(err);
     });
-});
-  
+});  
 
+  
 router.get("/api/workouts", (req, res) => {
   Workout.aggregate([ 
     {
@@ -71,14 +71,15 @@ router.get("/api/workouts/range", (req, res) => {
   })
 });
 
+
 router.put("/api/workouts/:id", (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
   Workout.findByIdAndUpdate(
     req.params.id,
-    { $push: { exercise: req.body }},
+    { $push: { exercises: req.body }},
     { new: true })
     .then(dbWorkout => { res.json(dbWorkout); })
-    .catch(err => { res.json(err); });
+    .catch(err => { res.status(404).json(err); });
 });
 
 
