@@ -7,6 +7,8 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(logger("dev"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -19,10 +21,9 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useUnifiedTopology: true,
 });
 
-app.use(logger("dev"));
 
 // routes
-app.use(require(".app/routes/apiRoutes.js"));
+app.use(require("./routes/apiRoutes.js"));
 app.use(require("./routes/html.js"));
 
 app.listen(PORT, () => {
