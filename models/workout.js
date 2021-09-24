@@ -25,10 +25,12 @@ const WorkoutSchema = new Schema({
         trim: true,
         required: "please enter your time in minutes",
       },
-      weight: Number,
-      sets: Number,
-      reps: Number,
-      distance: Number,
+
+      weight:{ type: Number},
+      sets:{ type: Number},
+      reps:{ type: Number},
+      distance:{ type: Number},
+      
         
       }]
 });
