@@ -1,9 +1,8 @@
 # Personal-Workout-Tracker
+Link to page here https://the-workout-tracker-2021.herokuapp.com/
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-Link to page here [https://the-workout-tracker-2021.herokuapp.com/?id=61a26ae742e8ce001671ed11]
-![img1.png]()
-![img2.png]
+
 
     
 ## Table of Contents
